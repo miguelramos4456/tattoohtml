@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 140" preserveAspectRatio="xMidYMid meet">
+  <defs>
+
+    <!-- metaball merge: blur then threshold snaps overlapping circles into one fluid shape -->
+    <filter id="blob-L" x="-8%" y="-40%" width="116%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -7"
+        result="threshold"/>
+    </filter>
+    <filter id="blob-R" x="-8%" y="-40%" width="116%" height="180%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="9" result="blur"/>
+      <feColorMatrix in="blur" type="matrix"
+        values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 26 -7"
+        result="threshold"/>
+    </filter>
+
+    <!-- wide atmospheric glow behind everything -->
+    <filter id="glow-atm" x="-20%" y="-100%" width="140%" height="300%">
+      <feGaussianBlur stdDeviation="24"/>
+    </filter>
+
+    <!-- softer glow for ribbons and spirals -->
+    <filter id="glow-soft" x="-10%" y="-200%" width="120%" height="500%">
+      <feGaussianBlur stdDeviation="7" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+
+  </defs>
+
+  <!-- ── ATMOSPHERIC GLOW (bottom layer) ────────────────────── -->
+  <g filter="url(#glow-atm)" opacity="0.55">
+    <ellipse cx="245"  cy="98" rx="230" ry="52" fill="white"/>
+    <ellipse cx="1195" cy="98" rx="230" ry="52" fill="white"/>
+    <path d="M 390,102 Q 720,86 1050,102" stroke="white" stroke-width="28" fill="none"/>
+  </g>
+
+  <!-- ── LEFT CLOUD BODY (metaball circles) ─────────────────── -->
+  <g filter="url(#blob-L)" fill="white">
+    <circle cx="118" cy="104" r="27"/>
+    <circle cx="158" cy="88"  r="34"/>
+    <circle cx="204" cy="73"  r="41"/>
+    <circle cx="252" cy="77"  r="36"/>
+    <circle cx="294" cy="89"  r="28"/>
+    <circle cx="326" cy="102" r="20"/>
+    <rect x="106" y="98" width="232" height="30" rx="15"/>
+  </g>
+
+  <!-- ── LEFT SPIRAL ACCENTS ────────────────────────────────── -->
+  <g filter="url(#glow-soft)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+    <!-- outer bottom-left tail curl -->
+    <path d="M 116,122 C 96,129 82,116 92,102 C 102,89 118,94 112,110" stroke-width="3.5"/>
+    <!-- inner body spiral -->
+    <path d="M 198,99 C 190,88 195,77 206,79 C 217,81 215,94 206,97" stroke-width="2.5"/>
+    <!-- tiny wisp left -->
+    <path d="M 88,108 C 68,107 54,97 60,86" stroke-width="2" opacity="0.65"/>
+    <!-- second small curl -->
+    <path d="M 258,86 C 268,76 278,80 274,90" stroke-width="2" opacity="0.7"/>
+  </g>
+
+  <!-- ── LEFT TAIL → CENTER ─────────────────────────────────── -->
+  <g filter="url(#glow-soft)" fill="none" stroke="white" stroke-linecap="round">
+    <!-- main thick ribbon -->
+    <path d="M 344,108 C 402,102 468,95 542,91 C 610,88 660,91 706,98"
+          stroke-width="6.5" opacity="0.95"/>
+    <!-- secondary thin ribbon -->
+    <path d="M 344,115 C 402,110 468,104 542,100 C 610,97 660,100 706,106"
+          stroke-width="3"   opacity="0.7"/>
+    <!-- upper wisp 1 -->
+    <path d="M 376,100 C 450,88 548,83 630,87 C 674,90 704,96 722,101"
+          stroke-width="1.8" opacity="0.4"/>
+    <!-- upper wisp 2 -->
+    <path d="M 412,94  C 490,81 580,77 660,81"
+          stroke-width="1"   opacity="0.28"/>
+  </g>
+
+  <!-- ── CENTER WEAVE (crossing ribbon) ─────────────────────── -->
+  <g fill="none" stroke="white" stroke-linecap="round">
+    <path d="M 706,98  C 724,93 742,99 760,98"  stroke-width="6.5" opacity="0.9"/>
+    <path d="M 706,106 C 724,102 742,107 760,106" stroke-width="3"   opacity="0.65"/>
+    <path d="M 710,91  C 730,84 752,90 770,88"  stroke-width="1.6" opacity="0.32"/>
+  </g>
+
+  <!-- ── RIGHT TAIL ← CENTER ───────────────────────────────── -->
+  <g filter="url(#glow-soft)" fill="none" stroke="white" stroke-linecap="round">
+    <path d="M 1096,108 C 1038,102 972,95 898,91 C 830,88 780,91 734,98"
+          stroke-width="6.5" opacity="0.95"/>
+    <path d="M 1096,115 C 1038,110 972,104 898,100 C 830,97 780,100 734,106"
+          stroke-width="3"   opacity="0.7"/>
+    <path d="M 1064,100 C 990,88 892,83 810,87 C 766,90 736,96 718,101"
+          stroke-width="1.8" opacity="0.4"/>
+    <path d="M 1028,94  C 950,81 860,77 780,81"
+          stroke-width="1"   opacity="0.28"/>
+  </g>
+
+  <!-- ── RIGHT CLOUD BODY (metaball circles, mirrored) ─────── -->
+  <g filter="url(#blob-R)" fill="white">
+    <circle cx="1322" cy="104" r="27"/>
+    <circle cx="1282" cy="88"  r="34"/>
+    <circle cx="1236" cy="73"  r="41"/>
+    <circle cx="1188" cy="77"  r="36"/>
+    <circle cx="1146" cy="89"  r="28"/>
+    <circle cx="1114" cy="102" r="20"/>
+    <rect x="1102" y="98" width="232" height="30" rx="15"/>
+  </g>
+
+  <!-- ── RIGHT SPIRAL ACCENTS (mirrored) ───────────────────── -->
+  <g filter="url(#glow-soft)" fill="none" stroke="white" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 1324,122 C 1344,129 1358,116 1348,102 C 1338,89 1322,94 1328,110" stroke-width="3.5"/>
+    <path d="M 1242,99  C 1250,88 1245,77 1234,79 C 1223,81 1225,94 1234,97" stroke-width="2.5"/>
+    <path d="M 1352,108 C 1372,107 1386,97 1380,86" stroke-width="2" opacity="0.65"/>
+    <path d="M 1182,86  C 1172,76 1162,80 1166,90" stroke-width="2" opacity="0.7"/>
+  </g>
+
+</svg>
