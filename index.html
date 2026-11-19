@@ -2,391 +2,289 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Alexander Krane — Tattoo Artist. Fine Line, Realism &amp; Japanese Traditional. Based in Berlin." />
-  <title>Alexander Krane — Tattoo Artist</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Alexander Krane | Independent Tattoo Artist</title>
+  <meta name="description" content="Alexander Krane, independent tattoo artist. Custom fine line, realism and Japanese-inspired work. Start a consultation online." />
+  <meta name="theme-color" content="#121212" />
+  <meta property="og:title" content="Alexander Krane | Independent Tattoo Artist" />
+  <meta property="og:description" content="Custom tattoo work. Start a consultation online." />
+  <meta property="og:type" content="website" />
+
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23121212'/%3E%3Ccircle cx='46' cy='18' r='5' fill='%238E382E'/%3E%3Cpath d='M18 50 L32 12 L46 50 M24 36 H40' stroke='%23E9E3D8' stroke-width='5' fill='none'/%3E%3C/svg%3E" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400;1,700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@400;500;700&family=UnifrakturCook:wght@700&display=swap" rel="stylesheet" />
 
+  <link rel="preload" as="image" href="assets/photo/hero.webp" type="image/webp" />
   <link rel="stylesheet" href="css/style.css" />
+  <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
 
-  <!-- ============================================================
-       NAVIGATION
-       ============================================================ -->
-  <nav class="nav" role="navigation" aria-label="Main navigation">
-    <div class="nav__inner">
-      <a href="#" class="nav__monogram" aria-label="Alexander Krane — home">A.K</a>
-      <ul class="nav__links" role="list">
-        <li><a href="#work">Work</a></li>
-        <li><a href="#about">About</a></li>
-        <li><a href="#process">Process</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-      <button class="nav__hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="mobile-menu">
-        <span></span>
-        <span></span>
-        <span></span>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header" data-header>
+    <div class="site-header__inner">
+      <a href="#top" class="monogram" aria-label="Alexander Krane, back to top">
+        <span aria-hidden="true">AK</span>
+      </a>
+
+      <nav class="site-nav" aria-label="Main">
+        <ul role="list">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#faq">FAQ</a></li>
+        </ul>
+      </nav>
+
+      <a href="#consult" class="btn btn--small btn--outline site-header__book">Book a tattoo</a>
+
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+        <span class="menu-toggle__label">Menu</span>
+        <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span></span>
       </button>
     </div>
-  </nav>
 
-  <!-- MOBILE MENU -->
-  <div class="mobile-menu" id="mobile-menu" role="dialog" aria-modal="true" aria-label="Navigation" aria-hidden="true">
-    <button class="mobile-menu__close" aria-label="Close navigation menu">&#x2715;</button>
-    <ul role="list">
-      <li><a href="#work">Work</a></li>
-      <li><a href="#about">About</a></li>
-      <li><a href="#process">Process</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </div>
-  <div class="mobile-menu__overlay" aria-hidden="true"></div>
-
-  <!-- ============================================================
-       HERO — SCROLL-SCRUBBED VIDEO
-       ============================================================ -->
-  <section class="hero" id="hero" aria-label="Hero">
-    <canvas class="hero__canvas" aria-hidden="true"></canvas>
-
-    <div class="hero__vignette" aria-hidden="true"></div>
-    <div class="hero__bottom-fade" aria-hidden="true"></div>
-
-    <div class="hero__content">
-      <h1 class="hero__name">Alexander<br>Krane</h1>
-      <p class="hero__tagline">Fine Line &middot; Realism &middot; Japanese Traditional</p>
-      <div class="hero__rule" role="presentation"></div>
-      <svg class="hero__sig-line" viewBox="0 0 320 22" fill="none" aria-hidden="true" preserveAspectRatio="xMidYMid meet">
-        <path class="hero__sig-path" d="M 4,14 C 35,5 68,20 100,12 C 132,4 162,18 194,10 C 218,4 248,17 272,10 C 288,6 302,14 316,12" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    <div class="mobile-menu" id="mobile-menu" data-mobile-menu hidden>
+      <nav aria-label="Mobile">
+        <ul role="list" class="mobile-menu__list">
+          <li><a href="#work">Work</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#process">Process</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="#consult">Book a tattoo</a></li>
+        </ul>
+      </nav>
     </div>
+  </header>
 
-    <div class="hero__scroll-indicator" aria-hidden="true">
-      <span class="hero__scroll-label">Scroll</span>
-      <span class="hero__chevron"></span>
-    </div>
-  </section>
+  <main id="main">
 
-  <!-- ============================================================
-       SIGNATURE STATEMENT
-       ============================================================ -->
-  <section class="statement" aria-label="Artist statement">
-    <div class="container">
-      <blockquote class="statement__quote reveal">
-        &#8220;Every piece of skin is a canvas that tells a story no one else can carry.&#8221;
-      </blockquote>
-      <p class="statement__author reveal">Alexander Krane</p>
-    </div>
-  </section>
+    <!-- HERO -->
+    <section class="hero" id="top" aria-labelledby="hero-title">
+      <div class="hero__content">
+        <h1 class="hero__title" id="hero-title">Alexander <span>Krane</span></h1>
+        <p class="hero__claim">Custom tattoos, drawn for one person and one placement.</p>
+        <p class="hero__lede">Fine line, realism and Japanese-inspired work. Tell Alexander your idea in a three-minute consultation and he’ll reply with a design direction, a quote and dates.</p>
 
-  <div class="cloud-sep-top" aria-hidden="true">
-    <img src="./images/cloud-divider.png" alt="">
-  </div>
-
-  <!-- ============================================================
-       WORK / PORTFOLIO
-       ============================================================ -->
-  <section class="work" id="work" aria-label="Portfolio — Selected Work">
-    <div class="container">
-      <div class="section-label reveal">
-        <span class="section-label__line" aria-hidden="true"></span>
-        <span class="section-label__text">Selected Work</span>
-      </div>
-      <div class="work__filters" role="group" aria-label="Filter by style">
-        <button class="work__filter is-active" data-filter="all">All</button>
-        <button class="work__filter" data-filter="fine-line">Fine Line</button>
-        <button class="work__filter" data-filter="realism">Realism</button>
-        <button class="work__filter" data-filter="japanese">Japanese</button>
-        <button class="work__filter" data-filter="blackwork">Blackwork</button>
-        <button class="work__filter" data-filter="geometric">Geometric</button>
-      </div>
-
-      <div class="work__grid" role="list">
-
-        <div class="work__centre" aria-hidden="true">
-          <span class="work__centre-mono">A.K</span>
+        <div class="hero__actions">
+          <a href="#consult" class="btn btn--solid btn--large">Book a consultation</a>
+          <a href="#work" class="btn btn--outline btn--large">See the work</a>
         </div>
 
-        <article class="work__card reveal" role="listitem" aria-label="Fine Line portrait, 2024" data-style="fine-line">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/4;">
-              <img src="https://picsum.photos/seed/w1/600/800" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Fine Line</span>
-                <span class="work__year">2024</span>
-              </div>
-            </div>
+        <dl class="hero__facts">
+          <div>
+            <dt>Styles</dt>
+            <dd>Fine line, realism, Japanese</dd>
           </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Realism sleeve, 2024" data-style="realism">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/5;">
-              <img src="https://picsum.photos/seed/w2/600/1000" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Realism</span>
-                <span class="work__year">2024</span>
-              </div>
-            </div>
+          <div>
+            <dt>Studio</dt>
+            <dd data-artist-city>Berlin</dd>
           </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Japanese dragon, 2023" data-style="japanese">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 4/5;">
-              <img src="https://picsum.photos/seed/w3/600/750" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Japanese</span>
-                <span class="work__year">2023</span>
-              </div>
-            </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/alexanderkrane" target="_blank" rel="noopener noreferrer" data-artist-ig>@alexanderkrane</a></dd>
           </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Blackwork mandala, 2024" data-style="blackwork">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/4;">
-              <img src="https://picsum.photos/seed/w4/600/800" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Blackwork</span>
-                <span class="work__year">2024</span>
-              </div>
-            </div>
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:book@alexanderkrane.com" data-artist-email>book@alexanderkrane.com</a></dd>
           </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Fine line botanical, 2024" data-style="fine-line">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/5;">
-              <img src="https://picsum.photos/seed/w5/600/1000" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Fine Line</span>
-                <span class="work__year">2024</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Geometric dotwork, 2023" data-style="geometric">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/4;">
-              <img src="https://picsum.photos/seed/w6/600/800" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Geometric</span>
-                <span class="work__year">2023</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Japanese koi, 2023" data-style="japanese">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 4/5;">
-              <img src="https://picsum.photos/seed/w7/600/750" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Japanese</span>
-                <span class="work__year">2023</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Realism portrait, 2022" data-style="realism">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/4;">
-              <img src="https://picsum.photos/seed/w8/600/800" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Realism</span>
-                <span class="work__year">2022</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
-        <article class="work__card reveal" role="listitem" aria-label="Blackwork geometric, 2022" data-style="blackwork">
-          <div class="work__card-inner">
-            <div class="work__image" style="--ar: 3/5;">
-              <img src="https://picsum.photos/seed/w9/600/1000" alt="" loading="lazy">
-              <div class="work__grain" aria-hidden="true"></div>
-              <div class="work__hover-panel">
-                <span class="work__style">Blackwork</span>
-                <span class="work__year">2022</span>
-              </div>
-            </div>
-          </div>
-        </article>
-
+        </dl>
       </div>
-    </div>
-  </section>
 
-  <!-- ============================================================
-       ABOUT
-       ============================================================ -->
-  <section class="about" id="about" aria-label="About the artist">
-    <div class="container">
-      <div class="about__grid">
+      <figure class="hero__media">
+        <img src="assets/photo/hero.webp"
+             srcset="assets/photo/hero-sm.webp 900w, assets/photo/hero.webp 1536w"
+             sizes="(max-width: 900px) 100vw, 58vw"
+             width="1536" height="1024"
+             alt="Gloved hands tattooing fine black linework on a forearm"
+             fetchpriority="high" />
+      </figure>
+    </section>
 
-        <div class="about__portrait-wrap reveal">
-          <div class="about__portrait" role="img" aria-label="Artist portrait">
-            <img src="https://picsum.photos/seed/artist/800/1000" alt="Artist portrait" loading="lazy">
-            <div class="about__portrait-vignette" aria-hidden="true"></div>
-          </div>
+    <!-- SELECTED WORK -->
+    <section class="work surface-bone" id="work" aria-labelledby="work-title">
+      <header class="work__head">
+        <h2 class="display work__title" id="work-title">Selected <span class="indent">work.</span></h2>
+        <div class="work__filters" role="group" aria-label="Filter work by style" data-filters></div>
+        <p class="work__count" data-work-count aria-live="polite"></p>
+      </header>
+
+      <div class="work__notice" data-work-notice hidden></div>
+
+      <ul class="work__grid" role="list" data-work-grid></ul>
+    </section>
+
+    <dialog class="lightbox" data-lightbox aria-label="Tattoo image viewer">
+      <div class="lightbox__frame">
+        <figure class="lightbox__figure">
+          <div class="lightbox__media" data-lb-media></div>
+          <figcaption class="lightbox__info">
+            <p class="lightbox__index" data-lb-index></p>
+            <h3 class="lightbox__title" data-lb-title></h3>
+            <dl class="lightbox__meta" data-lb-meta></dl>
+            <p class="lightbox__note" data-lb-note></p>
+          </figcaption>
+        </figure>
+        <button type="button" class="lightbox__btn lightbox__prev" data-lb-prev aria-label="Previous image"><span aria-hidden="true">←</span></button>
+        <button type="button" class="lightbox__btn lightbox__next" data-lb-next aria-label="Next image"><span aria-hidden="true">→</span></button>
+        <button type="button" class="lightbox__close" data-lb-close aria-label="Close image viewer">Close <span aria-hidden="true">×</span></button>
+      </div>
+    </dialog>
+
+    <!-- ABOUT -->
+    <section class="about" id="about" aria-labelledby="about-title">
+      <figure class="about__portrait" data-portrait>
+        <div class="about__portrait-frame" data-portrait-frame>
+          <img src="assets/photo/studio.webp" width="1120" height="1400" loading="lazy" decoding="async"
+               alt="A tattoo studio desk with pencil drawings, ink caps and flash sheets pinned to the wall" />
         </div>
+      </figure>
 
-        <div class="about__text reveal">
-          <p class="about__label">About the Artist</p>
-          <h2 class="about__name">Alexander<br>Krane</h2>
-          <div class="about__bio">
-            <p>With over a decade of experience shaping skin into narrative, Alexander Krane has built a reputation as one of Berlin&#8217;s most sought-after tattoo artists. His studio in Mitte has become a quiet sanctuary for those who seek art that endures long after the session ends.</p>
-            <p>Specialising in fine line realism and Japanese traditional, Alexander&#8217;s work balances delicate precision with bold compositional instinct. Each piece is developed through close collaboration &#8212; no two tattoos emerge from the same conversation, and no conversation is rushed.</p>
-            <p>Trained under master artists in Tokyo and Amsterdam, he brings a cross-cultural depth to his craft. Whether it&#8217;s a single brushstroke portrait or a full-sleeve composition rooted in irezumi tradition, every mark is intentional, every line considered.</p>
-          </div>
-          <div class="about__stats">
-            <div class="about__stat-pill">
-              <span>10+ Years</span>
-            </div>
-            <div class="about__stat-pill">
-              <span>500+ Pieces</span>
-            </div>
-          </div>
+      <h2 class="about__title display" id="about-title">
+        <span>The hand</span>
+        <span class="indent">behind</span>
+        <span>the needle.</span>
+      </h2>
+
+      <div class="about__body">
+        <p class="about__quote" data-about-quote></p>
+        <div class="about__bio" data-about-bio></div>
+        <ul class="about__statements" role="list" data-about-statements></ul>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section class="process surface-bone" id="process" aria-labelledby="process-title">
+      <header class="process__head">
+        <h2 class="display process__title" id="process-title">From a<br />conversation<br /><span class="indent">to skin.</span></h2>
+        <figure class="process__photo">
+          <img src="assets/photo/detail.webp" width="1120" height="1400" loading="lazy" decoding="async"
+               alt="Close-up of gloved hands wiping fresh black linework on skin" />
+        </figure>
+      </header>
+
+      <ol class="steps" role="list">
+        <li class="step">
+          <h3 class="step__title">Conversation</h3>
+          <p>You tell Alexander what you are imagining: the idea, the feeling, the placement and the timing. The consultation below is the easiest way to start.</p>
+        </li>
+        <li class="step">
+          <h3 class="step__title">Concept</h3>
+          <p>Your references, the shape of the body part and the style are worked into a direction. Size, flow and how the piece will age are part of the decision.</p>
+        </li>
+        <li class="step">
+          <h3 class="step__title">Design</h3>
+          <p>An original drawing made for you, refined until it says exactly what was intended. No copies of other artists’ work.</p>
+        </li>
+        <li class="step">
+          <h3 class="step__title">Tattoo session</h3>
+          <p>The stencil is placed and checked with you before the first line. Then the work, done carefully, with breaks whenever you need them.</p>
+        </li>
+        <li class="step">
+          <h3 class="step__title">Healing &amp; aftercare</h3>
+          <p>You leave with aftercare instructions. Follow them, look after the piece while it settles, and get in touch if anything concerns you.</p>
+        </li>
+      </ol>
+    </section>
+
+    <!-- CONSULTATION -->
+    <section class="consult" id="consult" aria-labelledby="consult-title">
+      <header class="consult__head">
+        <h2 class="display consult__title" id="consult-title">Tell me <span class="indent">about it.</span></h2>
+        <p class="consult__lede">One question at a time. It takes about three minutes, and nothing is sent until you review it.</p>
+      </header>
+
+      <div class="consult__panel" data-consult>
+        <div class="consult__progress" aria-hidden="true">
+          <div class="consult__progress-bar" data-consult-bar></div>
         </div>
+        <p class="consult__step-label" data-consult-step aria-live="polite"></p>
 
+        <form class="consult__form" data-consult-form novalidate>
+          <div class="consult__stage" data-consult-stage></div>
+
+          <p class="consult__error" id="consult-error" data-consult-error role="alert"></p>
+
+          <div class="consult__nav">
+            <button type="button" class="btn btn--ghost" data-consult-prev>← Back</button>
+            <button type="submit" class="btn btn--solid" data-consult-next>Next →</button>
+          </div>
+        </form>
+        <noscript>
+          <p class="consult__noscript">The consultation needs JavaScript. You can email your idea instead: <a href="mailto:book@alexanderkrane.com">book@alexanderkrane.com</a>.</p>
+        </noscript>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <div class="cloud-sep-bottom" aria-hidden="true">
-    <img src="./images/cloud-divider.png" alt="">
-  </div>
+    <!-- FAQ -->
+    <section class="faq surface-bone" id="faq" aria-labelledby="faq-title">
+      <header class="faq__head">
+        <h2 class="display faq__title" id="faq-title">Ask <span class="indent">anything.</span></h2>
+        <p class="faq__lede">Type a question or pick one below. Answers come from a fixed list, not an AI. If yours isn’t covered, ask Alexander directly.</p>
+      </header>
 
-  <!-- ============================================================
-       SPECIALTIES
-       ============================================================ -->
-  <section class="specialties" id="specialties" aria-label="Specialties">
-    <img class="specialties__deco-tsunami" src="./images/tsunami_image.png" alt="" aria-hidden="true">
-    <div class="container">
-      <div class="section-label reveal">
-        <span class="section-label__line" aria-hidden="true"></span>
-        <span class="section-label__text">Specialties</span>
-      </div>
-      <div class="specialties__grid">
-
-        <article class="specialty-card reveal" aria-label="Specialty: Fine Line Realism">
-          <span class="specialty-card__num" aria-hidden="true">01</span>
-          <h3 class="specialty-card__name">Fine Line Realism</h3>
-          <p class="specialty-card__desc">Ultra-thin linework capturing photographic depth. Portraits, botanicals, and architectural detail rendered with sub-millimetre precision on any placement.</p>
-        </article>
-
-        <article class="specialty-card reveal" aria-label="Specialty: Japanese Traditional">
-          <span class="specialty-card__num" aria-hidden="true">02</span>
-          <h3 class="specialty-card__name">Japanese Traditional</h3>
-          <p class="specialty-card__desc">Rooted in irezumi &#8212; bold outlines, flat fills, and timeless motifs. Dragons, koi, chrysanthemums, and waves executed with classical discipline and modern restraint.</p>
-        </article>
-
-        <article class="specialty-card reveal" aria-label="Specialty: Geometric and Blackwork">
-          <span class="specialty-card__num" aria-hidden="true">03</span>
-          <h3 class="specialty-card__name">Geometric &amp; Blackwork</h3>
-          <p class="specialty-card__desc">Sacred geometry, dotwork mandalas, and solid black fields. Pure form stripped of ornamentation &#8212; letting shape and negative space tell the story.</p>
-        </article>
-
-      </div>
-    </div>
-  </section>
-
-  <!-- ============================================================
-       PROCESS
-       ============================================================ -->
-  <section class="process" id="process" aria-label="The process">
-    <img class="process__deco-koi" src="./images/koi_img.png" alt="" aria-hidden="true">
-    <div class="container">
-      <div class="section-label reveal">
-        <span class="section-label__line" aria-hidden="true"></span>
-        <span class="section-label__text">The Process</span>
+      <div class="faq__ask">
+        <form class="faq__form" data-faq-form role="search">
+          <label for="faq-input" class="visually-hidden">Your question</label>
+          <div class="faq__input-row">
+            <input id="faq-input" type="search" autocomplete="off" placeholder="e.g. Do I need a deposit?" data-faq-input />
+            <button type="submit" class="btn btn--solid">Ask</button>
+          </div>
+        </form>
+        <div class="faq__suggest" data-faq-suggest aria-label="Suggested questions"></div>
+        <div class="faq__result" data-faq-result aria-live="polite"></div>
       </div>
 
-      <div class="process__grid" role="list">
-
-        <article class="process__step reveal" role="listitem" aria-label="Step 1: Consultation">
-          <span class="process__num" aria-hidden="true">01</span>
-          <h3 class="process__step-name">Consultation</h3>
-          <p class="process__desc">We discuss your vision, placement, sizing, and skin tone. Every detail is considered before a single line is drawn or a design committed to paper.</p>
-        </article>
-
-        <article class="process__step reveal" role="listitem" aria-label="Step 2: Design">
-          <span class="process__num" aria-hidden="true">02</span>
-          <h3 class="process__step-name">Design</h3>
-          <p class="process__desc">A custom design is crafted, refined through iteration until it speaks exactly the language you intended. No flash, no shortcuts &#8212; only originals.</p>
-        </article>
-
-        <article class="process__step reveal" role="listitem" aria-label="Step 3: Session">
-          <span class="process__num" aria-hidden="true">03</span>
-          <h3 class="process__step-name">Session</h3>
-          <p class="process__desc">The studio is prepared. The stencil applied. The work begins &#8212; methodically, with full attention on every pass of the machine across your skin.</p>
-        </article>
-
-        <article class="process__step reveal" role="listitem" aria-label="Step 4: Aftercare">
-          <span class="process__num" aria-hidden="true">04</span>
-          <h3 class="process__step-name">Aftercare</h3>
-          <p class="process__desc">Detailed aftercare guidance ensures your piece heals correctly and retains its clarity, contrast, and definition for years to come.</p>
-        </article>
-
+      <div class="faq__browse">
+        <div class="faq__cats" role="group" aria-label="Question topics" data-faq-cats></div>
+        <div class="faq__list" data-faq-list></div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- ============================================================
-       CONTACT / BOOKING
-       ============================================================ -->
-  <section class="contact" id="contact" aria-label="Booking and contact">
-    <img class="contact__deco-oni" src="./images/onimask_img.png" alt="" aria-hidden="true">
-    <div class="container">
-      <div class="contact__inner reveal">
-        <h2 class="contact__headline">Ready to wear<br><em>your story?</em></h2>
-        <p class="contact__sub">Limited bookings available.</p>
-        <a href="mailto:book@alexanderkrane.com" class="contact__cta">Book a Consultation</a>
-        <p class="contact__instagram">
-          <a href="https://instagram.com/alexanderkrane" target="_blank" rel="noopener noreferrer" aria-label="Follow Alexander Krane on Instagram">@alexanderkrane</a>
-        </p>
+    <!-- CONTACT -->
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="contact__ink" aria-hidden="true"></div>
+      <figure class="contact__machine machine-asset" data-machine aria-hidden="true">
+        <img class="machine-asset__still" src="assets/img/machine.webp" width="695" height="1000" alt="" loading="lazy" decoding="async" />
+      </figure>
+      <h2 class="contact__title" id="contact-title">
+        <span>Your next piece</span>
+        <span class="indent">starts here<span class="dot">.</span></span>
+      </h2>
+
+      <div class="contact__grid">
+        <a href="#consult" class="btn btn--solid btn--large">Start a consultation</a>
+        <dl class="contact__list">
+          <div>
+            <dt>Email</dt>
+            <dd><a href="mailto:book@alexanderkrane.com" data-artist-email>book@alexanderkrane.com</a></dd>
+          </div>
+          <div>
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/alexanderkrane" target="_blank" rel="noopener noreferrer" data-artist-ig>@alexanderkrane</a></dd>
+          </div>
+          <div>
+            <dt>Based in</dt>
+            <dd data-artist-city>Berlin</dd>
+          </div>
+        </dl>
       </div>
-    </div>
-  </section>
+    </section>
+  </main>
 
-  <!-- ============================================================
-       FOOTER
-       ============================================================ -->
-  <footer class="footer" role="contentinfo">
-    <div class="container">
-      <p class="footer__text">
-        &copy; 2025 Alexander Krane &mdash; All rights reserved
-        <span class="footer__sep" aria-hidden="true">|</span>
-        <a href="#" class="footer__link">Privacy</a>
-      </p>
-    </div>
+  <footer class="site-footer">
+    <p>© <span data-year>2026</span> Alexander Krane</p>
+    <p><a href="#top">Back to top ↑</a></p>
   </footer>
 
-  <!-- GSAP from cdnjs -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <!-- Three.js r128 -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"></script>
-
+  <script src="js/content.js"></script>
   <script src="js/main.js"></script>
-  <script src="js/animations.js"></script>
-  <script src="js/tattoo-machine.js"></script>
-  <script src="js/effects.js"></script>
+  <script src="js/gallery.js"></script>
+  <script src="js/consultation.js"></script>
+  <script src="js/faq.js"></script>
+  <script src="js/machine-asset.js"></script>
 </body>
 </html>

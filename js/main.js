@@ -1,219 +1,183 @@
 /* ============================================================
-   TATTOO PORTFOLIO — main.js
+   main.js — global layout: header, mobile menu, nav state,
+   content binding, quiet entrance reveals.
+   Native scrolling only. No scroll-driven animation.
    ============================================================ */
 
 (function () {
   'use strict';
 
+  var C = window.AK_CONTENT || {};
+  var artist = C.artist || {};
+
   /* ----------------------------------------------------------
-     CANVAS FRAME SCRUB
-     192 WebP frames in /frames/frame_0001.webp … frame_0192.webp
-     Drawing to canvas is instant — no seek latency at all.
+     Shared helpers (exposed for the other modules)
   ---------------------------------------------------------- */
+  var AK = window.AK = window.AK || {};
 
-  var TOTAL_FRAMES = 192;
-  var frames       = new Array(TOTAL_FRAMES);
-  var loadedCount  = 0;
-  var currentIdx   = 0;
+  AK.esc = function (s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  };
+  AK.reducedMotion = function () {
+    return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  };
+  AK.store = {
+    get: function (k) { try { return JSON.parse(window.localStorage.getItem(k)); } catch (e) { return null; } },
+    set: function (k, v) { try { window.localStorage.setItem(k, JSON.stringify(v)); } catch (e) { /* private mode */ } },
+    del: function (k) { try { window.localStorage.removeItem(k); } catch (e) { /* noop */ } }
+  };
 
-  var hero      = document.querySelector('.hero');
-  var canvasEl  = document.querySelector('.hero__canvas');
-  var content   = document.querySelector('.hero__content');
-  var indicator = document.querySelector('.hero__scroll-indicator');
-  var ctx       = canvasEl ? canvasEl.getContext('2d') : null;
-
-  /* Size canvas to match the hero's pixel dimensions */
-  function resizeCanvas() {
-    if (!canvasEl || !hero) return;
-    canvasEl.width  = hero.offsetWidth;
-    canvasEl.height = hero.offsetHeight;
+  /* ----------------------------------------------------------
+     Bind artist details from content.js
+  ---------------------------------------------------------- */
+  if (artist.email) {
+    document.querySelectorAll('[data-artist-email]').forEach(function (a) {
+      a.href = 'mailto:' + artist.email;
+      a.textContent = artist.email;
+    });
   }
-
-  /* Draw a frame with cover behaviour (mirrors object-fit: cover) */
-  function drawFrame(idx) {
-    if (!ctx) return;
-    var img = frames[idx];
-    if (!img || !img.complete || !img.naturalWidth) return;
-
-    var cw = canvasEl.width;
-    var ch = canvasEl.height;
-    var ia = img.naturalWidth / img.naturalHeight;
-    var ca = cw / ch;
-    var dw, dh, ox, oy;
-
-    if (ia > ca) {
-      /* Image wider than canvas — letterbox left/right */
-      dh = ch;
-      dw = dh * ia;
-      ox = (cw - dw) / 2;
-      oy = 0;
-    } else {
-      /* Image taller than canvas — letterbox top/bottom */
-      dw = cw;
-      dh = dw / ia;
-      ox = 0;
-      oy = (ch - dh) / 2;
-    }
-
-    ctx.drawImage(img, ox, oy, dw, dh);
+  if (artist.instagram) {
+    document.querySelectorAll('[data-artist-ig]').forEach(function (a) {
+      a.href = 'https://instagram.com/' + encodeURIComponent(artist.instagram);
+      a.textContent = '@' + artist.instagram;
+    });
   }
-
-  /* Preload every frame; draw the first as soon as it arrives */
-  function preloadFrames() {
-    resizeCanvas();
-
-    for (var i = 0; i < TOTAL_FRAMES; i++) {
-      /* IIFE to capture loop index */
-      (function (idx) {
-        var img    = new Image();
-        img.onload = function () {
-          loadedCount++;
-          if (idx === 0) drawFrame(0);      /* first frame → paint immediately */
-        };
-        img.src    = 'frames/frame_' + pad4(idx + 1) + '.webp';
-        frames[idx] = img;
-      }(i));
-    }
-  }
-
-  function pad4(n) {
-    return ('000' + n).slice(-4);
-  }
-
-  window.addEventListener('resize', function () {
-    resizeCanvas();
-    drawFrame(currentIdx);
+  document.querySelectorAll('[data-artist-city]').forEach(function (el) {
+    if (artist.city) el.textContent = artist.city;
+    else el.closest('div, p') && el.closest('div, p').setAttribute('hidden', '');
+  });
+  document.querySelectorAll('[data-year]').forEach(function (el) {
+    el.textContent = new Date().getFullYear();
   });
 
-  preloadFrames();
+  /* About */
+  (function () {
+    var about = C.about || {};
+    var quoteEl = document.querySelector('[data-about-quote]');
+    var bioEl = document.querySelector('[data-about-bio]');
+    var listEl = document.querySelector('[data-about-statements]');
+    var frame = document.querySelector('[data-portrait-frame]');
+    var statements = about.statements || [];
+
+    if (quoteEl) {
+      if (statements[0]) quoteEl.textContent = statements[0];
+      else quoteEl.remove();
+    }
+    if (bioEl) {
+      bioEl.innerHTML = (about.bio || []).map(function (p) { return '<p>' + AK.esc(p) + '</p>'; }).join('');
+    }
+    if (listEl) {
+      listEl.innerHTML = statements.slice(1).map(function (s) { return '<li>' + AK.esc(s) + '</li>'; }).join('');
+      if (!listEl.children.length) listEl.remove();
+    }
+    if (frame && about.portrait) {
+      var img = new Image();
+      img.alt = about.portraitAlt || artist.name || '';
+      img.loading = 'lazy';
+      img.decoding = 'async';
+      img.onload = function () { frame.innerHTML = ''; frame.appendChild(img); };
+      img.src = about.portrait;
+    }
+  }());
 
   /* ----------------------------------------------------------
-     GSAP ScrollTrigger — pin + frame scrub + content fade
+     Header: solid background once past the top of the hero
   ---------------------------------------------------------- */
-
-  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
-    gsap.registerPlugin(ScrollTrigger);
-
-    ScrollTrigger.create({
-      trigger: hero,
-      start: 'top top',
-      end: 'bottom top',
-      scrub: 0.5,
-      pin: true,
-      anticipatePin: 1,
-      onRefresh: initReveal,
-      onUpdate: function (self) {
-        var p = self.progress;
-
-        /* Map scroll progress to frame index */
-        currentIdx = Math.min(TOTAL_FRAMES - 1, Math.floor(p * TOTAL_FRAMES));
-        drawFrame(currentIdx);
-
-        /* Text fades out over first 30 % of scroll */
-        if (content)   content.style.opacity   = Math.max(0, 1 - p / 0.30);
-        if (indicator) indicator.style.opacity  = Math.max(0, 1 - p / 0.15);
-      }
-    });
-
-  } else {
-    initReveal();
+  var header = document.querySelector('[data-header]');
+  var hero = document.querySelector('.hero');
+  if (header && hero && 'IntersectionObserver' in window) {
+    var sentinel = document.createElement('div');
+    sentinel.setAttribute('aria-hidden', 'true');
+    sentinel.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:80px;pointer-events:none';
+    hero.appendChild(sentinel);
+    new IntersectionObserver(function (entries) {
+      header.classList.toggle('is-solid', !entries[0].isIntersecting);
+    }).observe(sentinel);
+  } else if (header) {
+    header.classList.add('is-solid');
   }
 
   /* ----------------------------------------------------------
-     SCROLL REVEAL — IntersectionObserver
-     Called from ScrollTrigger onRefresh so pin spacer is
-     already in the DOM when we measure positions.
+     Mobile menu
   ---------------------------------------------------------- */
+  var toggle = document.querySelector('[data-menu-toggle]');
+  var menu = document.querySelector('[data-mobile-menu]');
 
-  var revealReady = false;
+  function setMenu(open) {
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded', String(open));
+    toggle.querySelector('.menu-toggle__label').textContent = open ? 'Close' : 'Menu';
+    menu.hidden = !open;
+    header.classList.toggle('is-solid', open || window.scrollY > 40);
+    document.documentElement.style.overflow = open ? 'hidden' : '';
+    if (open) {
+      var first = menu.querySelector('a');
+      if (first) first.focus();
+    }
+  }
 
-  function initReveal() {
-    if (revealReady) return;
-    revealReady = true;
-
-    var observer = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: '0px 0px -40px 0px' }
-    );
-
-    /* Stagger siblings that share the same parent */
-    var groups = new Map();
-    document.querySelectorAll('.reveal').forEach(function (el) {
-      var p = el.parentElement;
-      if (!groups.has(p)) groups.set(p, []);
-      groups.get(p).push(el);
+  if (toggle && menu) {
+    toggle.addEventListener('click', function () {
+      setMenu(toggle.getAttribute('aria-expanded') !== 'true');
     });
+    menu.addEventListener('click', function (e) {
+      if (e.target.closest('a')) setMenu(false);
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && !menu.hidden) { setMenu(false); toggle.focus(); }
+    });
+    window.matchMedia('(min-width: 901px)').addEventListener('change', function (mq) {
+      if (mq.matches) setMenu(false);
+    });
+  }
 
-    groups.forEach(function (siblings) {
-      siblings.forEach(function (el, i) {
-        if (siblings.length > 1) el.style.transitionDelay = (i * 0.1) + 's';
-        observer.observe(el);
+  /* ----------------------------------------------------------
+     Current section in nav (aria-current)
+  ---------------------------------------------------------- */
+  var navLinks = Array.prototype.slice.call(document.querySelectorAll('.site-nav a[href^="#"]'));
+  if (navLinks.length && 'IntersectionObserver' in window) {
+    var map = {};
+    navLinks.forEach(function (a) { map[a.getAttribute('href').slice(1)] = a; });
+    var sectionObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        var link = map[en.target.id];
+        if (!link) return;
+        if (en.isIntersecting) {
+          navLinks.forEach(function (a) { a.removeAttribute('aria-current'); });
+          link.setAttribute('aria-current', 'true');
+        }
       });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    Object.keys(map).forEach(function (id) {
+      var s = document.getElementById(id);
+      if (s) sectionObs.observe(s);
     });
   }
 
   /* ----------------------------------------------------------
-     MOBILE MENU
+     Quiet entrance: elements fade in once when first seen.
+     Purely cosmetic and never hides content without JS.
   ---------------------------------------------------------- */
-
-  var hamburger     = document.querySelector('.nav__hamburger');
-  var mobileMenu    = document.querySelector('.mobile-menu');
-  var mobileOverlay = document.querySelector('.mobile-menu__overlay');
-  var mobileClose   = document.querySelector('.mobile-menu__close');
-
-  function openMenu() {
-    mobileMenu.classList.add('is-open');
-    mobileOverlay.classList.add('is-active');
-    mobileMenu.setAttribute('aria-hidden', 'false');
-    hamburger.setAttribute('aria-expanded', 'true');
-    document.body.style.overflow = 'hidden';
-    mobileClose.focus();
-  }
-
-  function closeMenu() {
-    mobileMenu.classList.remove('is-open');
-    mobileOverlay.classList.remove('is-active');
-    mobileMenu.setAttribute('aria-hidden', 'true');
-    hamburger.setAttribute('aria-expanded', 'false');
-    document.body.style.overflow = '';
-    hamburger.focus();
-  }
-
-  if (hamburger)     hamburger.addEventListener('click', openMenu);
-  if (mobileClose)   mobileClose.addEventListener('click', closeMenu);
-  if (mobileOverlay) mobileOverlay.addEventListener('click', closeMenu);
-
-  document.querySelectorAll('.mobile-menu a').forEach(function (a) {
-    a.addEventListener('click', closeMenu);
-  });
-
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && mobileMenu && mobileMenu.classList.contains('is-open')) {
-      closeMenu();
-    }
-  });
-
-  /* ----------------------------------------------------------
-     SMOOTH SCROLL
-  ---------------------------------------------------------- */
-
-  document.querySelectorAll('a[href^="#"]').forEach(function (a) {
-    a.addEventListener('click', function (e) {
-      var id = a.getAttribute('href');
-      if (id === '#') return;
-      var target = document.querySelector(id);
-      if (!target) return;
-      e.preventDefault();
-      var top = target.getBoundingClientRect().top + window.scrollY - 64;
-      window.scrollTo({ top: top, behavior: 'smooth' });
+  if ('IntersectionObserver' in window && !AK.reducedMotion()) {
+    var revealSel = [
+      '.display', '.about__portrait', '.about__body', '.process__photo', '.step',
+      '.consult__panel', '.faq__ask', '.faq__browse', '.contact__grid'
+    ].join(',');
+    var revealObs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (en.isIntersecting) {
+          en.target.classList.add('is-in');
+          revealObs.unobserve(en.target);
+        }
+      });
+    }, { rootMargin: '0px 0px -8% 0px', threshold: 0.05 });
+    document.querySelectorAll(revealSel).forEach(function (el) {
+      if (el.closest('.hero')) return;
+      el.classList.add('reveal');
+      revealObs.observe(el);
     });
-  });
+  }
 
 }());
